@@ -13,6 +13,10 @@ const nextConfig = {
   images: {
     domains: ['tailwindui.com', 'images.unsplash.com'],
   },
+  i18n: {
+    locales: ['en', 'tr'],
+    defaultLocale: 'en',
+  },
 };
 
 module.exports = withNx(nextConfig);
