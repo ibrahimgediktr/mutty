@@ -1,0 +1,30 @@
+[
+  {
+    "key": "doviz-1231231",
+    "name": "Döviz",
+    "topic": "Ekonomi",
+    "topicKey": "ekonomi",
+    "description": "Döviz ile işi olmayan kişiler için ideal topic"
+  },
+  {
+    "key": "maliye-bakani-12312312",
+    "name": "Maliye Bakanı",
+    "topic": "Ekonomi",
+    "topicKey": "ekonomi",
+    "description": "Maliye bakanının ne dediğini düşünmek ve görmek istemeyenler için"
+  },
+  {
+    "key": "phpciler-123123",
+    "name": "PHP ilgili her şey",
+    "topic": "Yazılım",
+    "topicKey": "yazilimcilar",
+    "description": "Lanet olası PHP cileri sonsuza dek susturun ve hayat kaliteniz iki kat artsın"
+  },
+  {
+    "key": "seocular-112312312",
+    "name": "Sağında solunda yazan SEO cular",
+    "topic": "Yazılım",
+    "topicKey": "yazilimcilar",
+    "description": "Ah SEO cular esiyocular :("
+  }
+]
