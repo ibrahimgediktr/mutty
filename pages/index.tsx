@@ -1,7 +1,6 @@
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import {FaqWithImage, FooterSimple, GridAsymmetrical, Header, Hero, CountryPicker} from "../components";
-import {Container, Grid} from "@mantine/core";
 
 const Home: NextPage = () => {
     const links = [
