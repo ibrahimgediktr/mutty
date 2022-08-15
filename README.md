@@ -26,6 +26,12 @@ $ npm run dev
 
 ```
 
+## TODO's
+
+- [ ] Design a new logo
+- [ ] Fix TODO's in codes
+- [ ] Design better UI
+
 ## Contribution
 
 Feel free to contribute as issue or PR
