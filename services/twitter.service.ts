@@ -108,7 +108,7 @@ export const addMutedKeyword = async (auth: OAuthToken, keyword: string) => {
         url: `https://api.twitter.com/1.1/mutes/keywords/create.json`,
         method: "POST",
         data: {
-            keyword,
+            keyword: keyword.replace('\n','').replace('\r',''),
             duration: "",
             mute_options: "",
             mute_surfaces: "notifications,home_timeline,tweet_replies",
@@ -116,7 +116,7 @@ export const addMutedKeyword = async (auth: OAuthToken, keyword: string) => {
     };
 
     try {
-        const result = await fetch(request.url, {
+        return await fetch(request.url, {
             method: request.method,
             body: new URLSearchParams(request.data),
             headers: {
@@ -125,8 +125,6 @@ export const addMutedKeyword = async (auth: OAuthToken, keyword: string) => {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
         }).then((res) => res.json());
-
-        return result;
     } catch (e) {
         console.warn("muting error", e);
     }

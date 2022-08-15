@@ -16,6 +16,7 @@ import {IconArrowLeft, IconBrandGithub, IconBrandTwitter} from "@tabler/icons";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {useForm} from '@mantine/form';
+import Link from "next/link";
 
 interface DotsProps extends React.ComponentPropsWithoutRef<'svg'> {
     size?: number;
@@ -311,7 +312,7 @@ export function Hero() {
                             <TextInput {...form.getInputProps('pin')} label="Twitter PIN" placeholder="123456"
                                        required/>
                             <Group position="apart" mt="lg" className={classes.controls}>
-                                <Button type={'submit'} className={classes.control}>Authorize</Button>
+                                <Button type={'submit'} className={'bg-tw-100'}>Authorize</Button>
                             </Group>
                         </Paper>
                     </form>
@@ -343,19 +344,22 @@ export function Hero() {
 
                     <div className={classes.controls}>
                         {username ? (
-                            <Button onClick={handleLogout} className={classes.control} color={'red'} size="lg">
+                            <Button className={'bg-red-600'} onClick={handleLogout} color={'red'} size="lg">
                                 Logout @{username}
                             </Button>
                         ) : (
-                            <Button onClick={handleLogin} className={classes.control} size="lg">
-                                <IconBrandTwitter size={18} fill={'white'} stroke={1.5}/>
+                            <Button className={'bg-tw-100'} onClick={handleLogin} size="lg">
+                                <IconBrandTwitter className={'mr-1'} size={18} fill={'white'}/>
                                 Login with Twitter
                             </Button>
                         )}
-                        <Button className={classes.control} size="lg" variant="default" color="dark">
-                            <IconBrandGithub size={18} fill={'black'} stroke={1.5}/>
-                            Github
-                        </Button>
+                        <Link href={"https://github.com/peacecwz/mutty"} target={'_blank'}>
+                            <Button className={'ml-2 bg-black text-white hover:bg-gray-500'} size="lg"
+                                    variant="default">
+                                <IconBrandGithub className={'mr-1'} size={18} fill={'white'}/>
+                                Github
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </Container>

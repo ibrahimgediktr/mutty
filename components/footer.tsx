@@ -1,11 +1,12 @@
-import { createStyles, Container, Group, Anchor } from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
+import {createStyles, Container, Group, Anchor} from '@mantine/core';
+import {MantineLogo} from '@mantine/ds';
+import Link from "next/link";
 
 const useStyles = createStyles((theme) => ({
     footer: {
         marginTop: 120,
         borderTop: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
-            }`,
+        }`,
     },
 
     inner: {
@@ -31,8 +32,8 @@ interface FooterSimpleProps {
     links: { link: string; label: string }[];
 }
 
-export function FooterSimple({ links }: FooterSimpleProps) {
-    const { classes } = useStyles();
+export function FooterSimple({links}: FooterSimpleProps) {
+    const {classes} = useStyles();
     const items = links.map((link) => (
         <Anchor<'a'>
             color="dimmed"
@@ -48,7 +49,15 @@ export function FooterSimple({ links }: FooterSimpleProps) {
     return (
         <div className={classes.footer}>
             <Container className={classes.inner}>
-                <MantineLogo size={28} />
+                <div className={'flex space-x-1 flex-row'}>
+                    <span>
+                        Build with
+                    </span>
+                    <Link href={"https://github.com/mantinedev/mantine"}>
+                        <a>Mantine</a>
+                    </Link>
+                    <span>UI</span>
+                </div>
                 <Group className={classes.links}>{items}</Group>
             </Container>
         </div>

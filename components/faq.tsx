@@ -99,7 +99,7 @@ export function FaqWithImage() {
 
                     <Accordion
                         chevronPosition="right"
-                        defaultValue="reset-password"
+                        defaultValue="authorization"
                         chevronSize={50}
                         variant="separated"
                         disableChevronRotation
@@ -109,14 +109,25 @@ export function FaqWithImage() {
                             </ThemeIcon>
                         }
                     >
-                        <Accordion.Item className={classes.item} value="reset-password">
-                            <Accordion.Control>How can I reset my password?</Accordion.Control>
-                            <Accordion.Panel>{placeholder}</Accordion.Panel>
+                        <Accordion.Item className={classes.item} value="save tokens">
+                            <Accordion.Control>Does mutty save or log tokens</Accordion.Control>
+                            <Accordion.Panel>
+                                Mutty doesn't save or log tokens. It's only writing your Twitter OAuth token as httpOnly. It's sending it with Twitter requests. You can check <a href={'https://github.com/peacecwz/mutty'}>the source codes</a>
+                            </Accordion.Panel>
+                        </Accordion.Item>
+
+                        <Accordion.Item className={classes.item} value="authorization">
+                            <Accordion.Control>Twitter has not any API support for muting keywords</Accordion.Control>
+                            <Accordion.Panel>
+                                Yes you are right but wrong. Actually Twitter has API for muting but It's not supported by developer created apps. If you find any main Twitter Apps Consumer Key and Secret. It works. Mutty is using 'Twitter for Mac' app. It has muting endpoint access. But we cannot use traditional authroization (redirect to callback). Mutty is using 'Twitter for mac' and It's not configured with callback. We must to get pin and authorize with Twitter
+                            </Accordion.Panel>
                         </Accordion.Item>
 
                         <Accordion.Item className={classes.item} value="another-account">
-                            <Accordion.Control>Can I create more that one account?</Accordion.Control>
-                            <Accordion.Panel>{placeholder}</Accordion.Panel>
+                            <Accordion.Control>How Can I add new keyword catalogs?</Accordion.Control>
+                            <Accordion.Panel>
+                                Open Pull Request to mutty source code repository. You can read how to add new keyword catalogs <a href={''}>This is detaild docs</a>
+                            </Accordion.Panel>
                         </Accordion.Item>
 
                         <Accordion.Item className={classes.item} value="newsletter">
@@ -125,13 +136,17 @@ export function FaqWithImage() {
                         </Accordion.Item>
 
                         <Accordion.Item className={classes.item} value="credit-card">
-                            <Accordion.Control>Do you store credit card information securely?</Accordion.Control>
-                            <Accordion.Panel>{placeholder}</Accordion.Panel>
-                        </Accordion.Item>
-
-                        <Accordion.Item className={classes.item} value="payment">
-                            <Accordion.Control>What payment systems to you work with?</Accordion.Control>
-                            <Accordion.Panel>{placeholder}</Accordion.Panel>
+                            <Accordion.Control>I can't trust as mutty.org. Can I run this project on local?</Accordion.Control>
+                            <Accordion.Panel>
+                                Sure you can.No need to use on 'mutty.org' Clone the repository and run 'npm install' after that. Create .env file into root directory and put your Twitter Consumer key and constumer secret into it. Example:
+                                <br />
+                                <br />
+                                TWITTER_CONSUMER_KEY=3rJOl1OXXXXXXXXXXXXXX
+                                TWITTER_CONSUMER_SECRET=5jPoQXXXXXXNE8bQXXXXXXXXXXhvgXXXXXXXXXX
+                                <br />
+                                <br />
+                                Then run 'npm run dev' and enjoy it.
+                            </Accordion.Panel>
                         </Accordion.Item>
                     </Accordion>
                 </Container>

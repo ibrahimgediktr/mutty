@@ -1,6 +1,13 @@
 import type {NextPage} from 'next'
 import Head from 'next/head'
-import {FaqWithImage, FooterSimple, GridAsymmetrical, Header, Hero, CountryPicker} from "../components";
+import {
+    FaqWithImage,
+    FooterSimple,
+    Header,
+    Hero,
+    CountryPicker,
+    KeywordManager
+} from "../components";
 
 const Home: NextPage = () => {
     const links = [
@@ -30,8 +37,7 @@ const Home: NextPage = () => {
 
             <Hero/>
 
-
-            <GridAsymmetrical/>
+            <KeywordManager/>
             <FaqWithImage/>
 
             <FooterSimple links={[

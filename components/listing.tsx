@@ -1,8 +1,7 @@
-import {Grid, Skeleton, Container, Select, createStyles} from '@mantine/core';
+import {Grid, Skeleton, Container, Select, createStyles, Tabs, Textarea, Button} from '@mantine/core';
 import {BadgeCard} from './card';
 import {useEffect, useState} from "react";
 import {CountryPicker, SelectItem} from "./country-picker";
-import {useRouter} from "next/router";
 
 type Category = {
     key: string;
@@ -13,7 +12,7 @@ type TwitterMute = {
     keyword: string;
 }
 
-export function GridAsymmetrical() {
+const KeywordCatalogList = () => {
     const [countries, setCountries] = useState([]);
     const [muteCategories, setMuteCategories] = useState([]);
     const [topics, setTopics] = useState<any[]>([]);
@@ -82,7 +81,7 @@ export function GridAsymmetrical() {
     }, []);
 
     return (
-        <>
+        <div className={'min-h-full mb-24'}>
             <Container>
                 <Grid>
                     <Grid.Col xs={6}>
@@ -131,6 +130,111 @@ export function GridAsymmetrical() {
                     ))}
                 </Grid>
             </Container>
-        </>
+        </div>
     );
+}
+
+const CustomKeyword = () => {
+    const [keywords, setKeywords] = useState([]);
+    const [state, setState] = useState('');
+
+    const handleOnChange = (e: any) => {
+        if (e.target.value === '') {
+            setKeywords([]);
+        } else {
+            setKeywords(e.target.value.split(',').filter((k: string) => k.trim() !== ''));
+        }
+    }
+
+    const handleMute = async () => {
+        setState('muting')
+        await fetch('/api/mutes/bulk', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                keywords
+            })
+        })
+        setState('muted')
+    }
+
+    return (
+        <Container className={'p-10 items-center justify-center'}>
+            <Textarea
+                onChange={handleOnChange}
+                placeholder="Keywords (split with comma)"
+                label={keywords.length === 0 ? `Keywords (split with comma)` : `${keywords.length} keywords`}
+                radius="md"
+            />
+            <Button disabled={state !== ''} className={'bg-tw-100 mt-4'} onClick={handleMute} size="lg">
+                {state === '' ? `Mute ${keywords.length} keywords` : `${state}`}
+            </Button>
+        </Container>
+    )
+}
+
+export const KeywordManager = () => {
+    return (
+        <Tabs unstyled styles={(theme) => ({
+            tab: {
+                ...theme.fn.focusStyles(),
+                backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+                color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
+                border: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]}`,
+                padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+                cursor: 'pointer',
+                fontSize: theme.fontSizes.sm,
+                display: 'flex',
+
+                '&:disabled': {
+                    opacity: 0.5,
+                    cursor: 'not-allowed',
+                },
+
+                '&:not(:first-of-type)': {
+                    borderLeft: 0,
+                },
+
+                '&:first-of-type': {
+                    borderTopLeftRadius: theme.radius.md,
+                    borderBottomLeftRadius: theme.radius.md,
+                },
+
+                '&:last-of-type': {
+                    borderTopRightRadius: theme.radius.md,
+                    borderBottomRightRadius: theme.radius.md,
+                },
+
+                '&[data-active]': {
+                    backgroundColor: theme.colors.blue[7],
+                    borderColor: theme.colors.blue[7],
+                    color: theme.white,
+                },
+            },
+
+            tabIcon: {
+                marginRight: theme.spacing.xs,
+                display: 'flex',
+                alignItems: 'center',
+            },
+
+            tabsList: {
+                display: 'flex',
+            },
+        })} defaultValue={'custom'}>
+            <Tabs.List className={'justify-center p-4'} position={'center'}>
+                <Tabs.Tab value={'catalogs'}>Catalogs</Tabs.Tab>
+                <Tabs.Tab value={'custom'}>Custom</Tabs.Tab>
+            </Tabs.List>
+
+            <Tabs.Panel value="catalogs">
+                <KeywordCatalogList/>
+            </Tabs.Panel>
+            <Tabs.Panel value="custom">
+                <CustomKeyword/>
+            </Tabs.Panel>
+        </Tabs>
+    )
 }
