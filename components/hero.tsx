@@ -330,7 +330,7 @@ export function Hero() {
                         <Text component="span" className={classes.highlight} inherit>
                             Twitter Timeline
                         </Text>
-                        with Mutty
+                        {' '}with Mutty
                     </Title>
 
                     <Container p={0} size={600}>
