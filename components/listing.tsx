@@ -78,7 +78,7 @@ const KeywordCatalogList = () => {
             setMyMutedKeywords(muted_keywords?.map((mutedKeyword: TwitterMute) => mutedKeyword.keyword) || []);
         };
         fetchAllMuteList();
-    }, []);
+    }, [isLogged]);
 
     return (
         <div className={'min-h-full mb-24'}>
