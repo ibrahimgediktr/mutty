@@ -84,7 +84,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
     };
 });
 
-export function FaqWithImage() {
+export function FAQ() {
     const {classes} = useStyles();
     return (
         <MantineProvider inherit theme={{colorScheme: 'light'}}>

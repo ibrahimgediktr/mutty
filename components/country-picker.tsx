@@ -1,5 +1,5 @@
-import {useState, forwardRef, ReactEventHandler} from 'react';
-import {createStyles, Menu, Image, Group, Text, Avatar, Select} from '@mantine/core';
+import {forwardRef} from 'react';
+import {Group, Text, Avatar, Select} from '@mantine/core';
 
 interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
     image?: string;
@@ -26,11 +26,10 @@ interface LanguagePickerProps {
     onSelect: any;
 }
 
-
 export function CountryPicker({
-                                   data,
-                                   onSelect
-                               }: LanguagePickerProps) {
+                                  data,
+                                  onSelect
+                              }: LanguagePickerProps) {
     return (
         <Select
             label="Countries"

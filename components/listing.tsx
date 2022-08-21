@@ -1,7 +1,9 @@
-import {Grid, Skeleton, Container, Select, createStyles, Tabs, Textarea, Button} from '@mantine/core';
-import {BadgeCard} from './card';
+import {Grid, Container, Select, Tabs, Textarea, Button} from '@mantine/core';
+import {KeywordCatalogCard} from './keyword-catalog-card';
 import {useEffect, useState} from "react";
 import {CountryPicker, SelectItem} from "./country-picker";
+
+import * as ga from '../utils/ga'
 
 type Category = {
     key: string;
@@ -17,9 +19,9 @@ const KeywordCatalogList = () => {
     const [muteCategories, setMuteCategories] = useState([]);
     const [topics, setTopics] = useState<any[]>([]);
     const [myMutedKeywords, setMyMutedKeywords] = useState([]);
-    const [selectedTopicKey, setSelectedTopicKey] = useState();
     const [muteKeywordCatalogs, setMuteKeywordCatalogs] = useState([]);
     const [isLogged, setLogged] = useState(false);
+    const [selectedCountry, setSelectedCountry] = useState('');
 
     const getCategories = () => {
         const loadedMutes = myMutedKeywords.filter((keyword: string) => keyword.indexOf('mutty:') > -1).map((keyword: string) => keyword.replace('mutty:', ''));
@@ -40,6 +42,15 @@ const KeywordCatalogList = () => {
         })
 
         setMuteCategories(categories);
+        setSelectedCountry(countryCode);
+
+        ga.event({
+            action: "CHANGE_COUNTRY",
+            params: {
+                country: countryCode
+            }
+        })
+
         // @ts-ignore
         setTopics([...new Map(categories.map(item => [item['topicKey'], item])).values()])
     }
@@ -102,7 +113,16 @@ const KeywordCatalogList = () => {
                                 label: topic.topic,
                                 value: topic.topicKey
                             }))}
-                            onChange={(topicKey) => setMuteKeywordCatalogs(muteCategories.filter((c: any) => c.topicKey === topicKey))}
+                            onChange={(topicKey) => {
+                                setMuteKeywordCatalogs(muteCategories.filter((c: any) => c.topicKey === topicKey))
+                                ga.event({
+                                    action: "CHANGE_TOPIC",
+                                    params: {
+                                        country: selectedCountry,
+                                        topic: topicKey
+                                    }
+                                })
+                            }}
                             searchable
                             nothingFound="Empty"
                             filter={(value, item: { label: string; value: string; image: string; }) =>
@@ -117,7 +137,7 @@ const KeywordCatalogList = () => {
                 <Grid>
                     {getCategories().map((m: any, index) => (
                         <Grid.Col key={`mute-keyword-catalog-${index}`} xs={4}>
-                            <BadgeCard
+                            <KeywordCatalogCard
                                 image={`https://loremflickr.com/320/240/${m.topicKey}?random=${index}`}
                                 title={m.name}
                                 description={m.description}
@@ -125,6 +145,7 @@ const KeywordCatalogList = () => {
                                 category={m}
                                 isMuted={m.isMuted}
                                 isLogged={isLogged}
+                                country={selectedCountry}
                             />
                         </Grid.Col>
                     ))}

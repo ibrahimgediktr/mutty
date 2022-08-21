@@ -1,8 +1,7 @@
 import {useState} from 'react';
 import {createStyles, Header as HeaderComponent, Group, ActionIcon, Container, Burger} from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
-import {IconBrandTwitter, IconBrandYoutube, IconBrandInstagram, IconBrandGithub} from '@tabler/icons';
-import {MantineLogo} from '@mantine/ds';
+import {IconBrandTwitter, IconBrandGithub} from '@tabler/icons';
 import Link from "next/link";
 import {GITHUB_URL, TWITTER_URL} from "../services/app.services";
 

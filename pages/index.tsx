@@ -1,8 +1,8 @@
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import {
-    FaqWithImage,
-    FooterSimple,
+    FAQ,
+    Footer,
     Header,
     Hero,
     CountryPicker,
@@ -38,9 +38,9 @@ const Home: NextPage = () => {
             <Hero/>
 
             <KeywordManager/>
-            <FaqWithImage/>
+            <FAQ/>
 
-            <FooterSimple links={[
+            <Footer links={[
                 {
                     label: 'Home',
                     link: '/'

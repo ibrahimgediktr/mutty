@@ -12,18 +12,20 @@ import {
     Anchor,
     Center
 } from '@mantine/core';
-import { IconArrowLeft, IconBrandGithub, IconBrandTwitter } from "@tabler/icons";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useForm } from '@mantine/form';
+import {IconBrandGithub, IconBrandTwitter} from "@tabler/icons";
+import {useEffect, useRef, useState} from "react";
+import {useRouter} from "next/router";
+import {useForm} from '@mantine/form';
 import Link from "next/link";
+
+import * as ga from '../utils/ga';
 
 interface DotsProps extends React.ComponentPropsWithoutRef<'svg'> {
     size?: number;
     radius?: number;
 }
 
-function Dots({ size = 185, radius = 2.5, ...others }: DotsProps) {
+function Dots({size = 185, radius = 2.5, ...others}: DotsProps) {
     return (
         <svg
             aria-hidden
@@ -34,106 +36,106 @@ function Dots({ size = 185, radius = 2.5, ...others }: DotsProps) {
             height={size}
             {...others}
         >
-            <rect width="5" height="5" rx={radius} />
-            <rect width="5" height="5" x="60" rx={radius} />
-            <rect width="5" height="5" x="120" rx={radius} />
-            <rect width="5" height="5" x="20" rx={radius} />
-            <rect width="5" height="5" x="80" rx={radius} />
-            <rect width="5" height="5" x="140" rx={radius} />
-            <rect width="5" height="5" x="40" rx={radius} />
-            <rect width="5" height="5" x="100" rx={radius} />
-            <rect width="5" height="5" x="160" rx={radius} />
-            <rect width="5" height="5" x="180" rx={radius} />
-            <rect width="5" height="5" y="20" rx={radius} />
-            <rect width="5" height="5" x="60" y="20" rx={radius} />
-            <rect width="5" height="5" x="120" y="20" rx={radius} />
-            <rect width="5" height="5" x="20" y="20" rx={radius} />
-            <rect width="5" height="5" x="80" y="20" rx={radius} />
-            <rect width="5" height="5" x="140" y="20" rx={radius} />
-            <rect width="5" height="5" x="40" y="20" rx={radius} />
-            <rect width="5" height="5" x="100" y="20" rx={radius} />
-            <rect width="5" height="5" x="160" y="20" rx={radius} />
-            <rect width="5" height="5" x="180" y="20" rx={radius} />
-            <rect width="5" height="5" y="40" rx={radius} />
-            <rect width="5" height="5" x="60" y="40" rx={radius} />
-            <rect width="5" height="5" x="120" y="40" rx={radius} />
-            <rect width="5" height="5" x="20" y="40" rx={radius} />
-            <rect width="5" height="5" x="80" y="40" rx={radius} />
-            <rect width="5" height="5" x="140" y="40" rx={radius} />
-            <rect width="5" height="5" x="40" y="40" rx={radius} />
-            <rect width="5" height="5" x="100" y="40" rx={radius} />
-            <rect width="5" height="5" x="160" y="40" rx={radius} />
-            <rect width="5" height="5" x="180" y="40" rx={radius} />
-            <rect width="5" height="5" y="60" rx={radius} />
-            <rect width="5" height="5" x="60" y="60" rx={radius} />
-            <rect width="5" height="5" x="120" y="60" rx={radius} />
-            <rect width="5" height="5" x="20" y="60" rx={radius} />
-            <rect width="5" height="5" x="80" y="60" rx={radius} />
-            <rect width="5" height="5" x="140" y="60" rx={radius} />
-            <rect width="5" height="5" x="40" y="60" rx={radius} />
-            <rect width="5" height="5" x="100" y="60" rx={radius} />
-            <rect width="5" height="5" x="160" y="60" rx={radius} />
-            <rect width="5" height="5" x="180" y="60" rx={radius} />
-            <rect width="5" height="5" y="80" rx={radius} />
-            <rect width="5" height="5" x="60" y="80" rx={radius} />
-            <rect width="5" height="5" x="120" y="80" rx={radius} />
-            <rect width="5" height="5" x="20" y="80" rx={radius} />
-            <rect width="5" height="5" x="80" y="80" rx={radius} />
-            <rect width="5" height="5" x="140" y="80" rx={radius} />
-            <rect width="5" height="5" x="40" y="80" rx={radius} />
-            <rect width="5" height="5" x="100" y="80" rx={radius} />
-            <rect width="5" height="5" x="160" y="80" rx={radius} />
-            <rect width="5" height="5" x="180" y="80" rx={radius} />
-            <rect width="5" height="5" y="100" rx={radius} />
-            <rect width="5" height="5" x="60" y="100" rx={radius} />
-            <rect width="5" height="5" x="120" y="100" rx={radius} />
-            <rect width="5" height="5" x="20" y="100" rx={radius} />
-            <rect width="5" height="5" x="80" y="100" rx={radius} />
-            <rect width="5" height="5" x="140" y="100" rx={radius} />
-            <rect width="5" height="5" x="40" y="100" rx={radius} />
-            <rect width="5" height="5" x="100" y="100" rx={radius} />
-            <rect width="5" height="5" x="160" y="100" rx={radius} />
-            <rect width="5" height="5" x="180" y="100" rx={radius} />
-            <rect width="5" height="5" y="120" rx={radius} />
-            <rect width="5" height="5" x="60" y="120" rx={radius} />
-            <rect width="5" height="5" x="120" y="120" rx={radius} />
-            <rect width="5" height="5" x="20" y="120" rx={radius} />
-            <rect width="5" height="5" x="80" y="120" rx={radius} />
-            <rect width="5" height="5" x="140" y="120" rx={radius} />
-            <rect width="5" height="5" x="40" y="120" rx={radius} />
-            <rect width="5" height="5" x="100" y="120" rx={radius} />
-            <rect width="5" height="5" x="160" y="120" rx={radius} />
-            <rect width="5" height="5" x="180" y="120" rx={radius} />
-            <rect width="5" height="5" y="140" rx={radius} />
-            <rect width="5" height="5" x="60" y="140" rx={radius} />
-            <rect width="5" height="5" x="120" y="140" rx={radius} />
-            <rect width="5" height="5" x="20" y="140" rx={radius} />
-            <rect width="5" height="5" x="80" y="140" rx={radius} />
-            <rect width="5" height="5" x="140" y="140" rx={radius} />
-            <rect width="5" height="5" x="40" y="140" rx={radius} />
-            <rect width="5" height="5" x="100" y="140" rx={radius} />
-            <rect width="5" height="5" x="160" y="140" rx={radius} />
-            <rect width="5" height="5" x="180" y="140" rx={radius} />
-            <rect width="5" height="5" y="160" rx={radius} />
-            <rect width="5" height="5" x="60" y="160" rx={radius} />
-            <rect width="5" height="5" x="120" y="160" rx={radius} />
-            <rect width="5" height="5" x="20" y="160" rx={radius} />
-            <rect width="5" height="5" x="80" y="160" rx={radius} />
-            <rect width="5" height="5" x="140" y="160" rx={radius} />
-            <rect width="5" height="5" x="40" y="160" rx={radius} />
-            <rect width="5" height="5" x="100" y="160" rx={radius} />
-            <rect width="5" height="5" x="160" y="160" rx={radius} />
-            <rect width="5" height="5" x="180" y="160" rx={radius} />
-            <rect width="5" height="5" y="180" rx={radius} />
-            <rect width="5" height="5" x="60" y="180" rx={radius} />
-            <rect width="5" height="5" x="120" y="180" rx={radius} />
-            <rect width="5" height="5" x="20" y="180" rx={radius} />
-            <rect width="5" height="5" x="80" y="180" rx={radius} />
-            <rect width="5" height="5" x="140" y="180" rx={radius} />
-            <rect width="5" height="5" x="40" y="180" rx={radius} />
-            <rect width="5" height="5" x="100" y="180" rx={radius} />
-            <rect width="5" height="5" x="160" y="180" rx={radius} />
-            <rect width="5" height="5" x="180" y="180" rx={radius} />
+            <rect width="5" height="5" rx={radius}/>
+            <rect width="5" height="5" x="60" rx={radius}/>
+            <rect width="5" height="5" x="120" rx={radius}/>
+            <rect width="5" height="5" x="20" rx={radius}/>
+            <rect width="5" height="5" x="80" rx={radius}/>
+            <rect width="5" height="5" x="140" rx={radius}/>
+            <rect width="5" height="5" x="40" rx={radius}/>
+            <rect width="5" height="5" x="100" rx={radius}/>
+            <rect width="5" height="5" x="160" rx={radius}/>
+            <rect width="5" height="5" x="180" rx={radius}/>
+            <rect width="5" height="5" y="20" rx={radius}/>
+            <rect width="5" height="5" x="60" y="20" rx={radius}/>
+            <rect width="5" height="5" x="120" y="20" rx={radius}/>
+            <rect width="5" height="5" x="20" y="20" rx={radius}/>
+            <rect width="5" height="5" x="80" y="20" rx={radius}/>
+            <rect width="5" height="5" x="140" y="20" rx={radius}/>
+            <rect width="5" height="5" x="40" y="20" rx={radius}/>
+            <rect width="5" height="5" x="100" y="20" rx={radius}/>
+            <rect width="5" height="5" x="160" y="20" rx={radius}/>
+            <rect width="5" height="5" x="180" y="20" rx={radius}/>
+            <rect width="5" height="5" y="40" rx={radius}/>
+            <rect width="5" height="5" x="60" y="40" rx={radius}/>
+            <rect width="5" height="5" x="120" y="40" rx={radius}/>
+            <rect width="5" height="5" x="20" y="40" rx={radius}/>
+            <rect width="5" height="5" x="80" y="40" rx={radius}/>
+            <rect width="5" height="5" x="140" y="40" rx={radius}/>
+            <rect width="5" height="5" x="40" y="40" rx={radius}/>
+            <rect width="5" height="5" x="100" y="40" rx={radius}/>
+            <rect width="5" height="5" x="160" y="40" rx={radius}/>
+            <rect width="5" height="5" x="180" y="40" rx={radius}/>
+            <rect width="5" height="5" y="60" rx={radius}/>
+            <rect width="5" height="5" x="60" y="60" rx={radius}/>
+            <rect width="5" height="5" x="120" y="60" rx={radius}/>
+            <rect width="5" height="5" x="20" y="60" rx={radius}/>
+            <rect width="5" height="5" x="80" y="60" rx={radius}/>
+            <rect width="5" height="5" x="140" y="60" rx={radius}/>
+            <rect width="5" height="5" x="40" y="60" rx={radius}/>
+            <rect width="5" height="5" x="100" y="60" rx={radius}/>
+            <rect width="5" height="5" x="160" y="60" rx={radius}/>
+            <rect width="5" height="5" x="180" y="60" rx={radius}/>
+            <rect width="5" height="5" y="80" rx={radius}/>
+            <rect width="5" height="5" x="60" y="80" rx={radius}/>
+            <rect width="5" height="5" x="120" y="80" rx={radius}/>
+            <rect width="5" height="5" x="20" y="80" rx={radius}/>
+            <rect width="5" height="5" x="80" y="80" rx={radius}/>
+            <rect width="5" height="5" x="140" y="80" rx={radius}/>
+            <rect width="5" height="5" x="40" y="80" rx={radius}/>
+            <rect width="5" height="5" x="100" y="80" rx={radius}/>
+            <rect width="5" height="5" x="160" y="80" rx={radius}/>
+            <rect width="5" height="5" x="180" y="80" rx={radius}/>
+            <rect width="5" height="5" y="100" rx={radius}/>
+            <rect width="5" height="5" x="60" y="100" rx={radius}/>
+            <rect width="5" height="5" x="120" y="100" rx={radius}/>
+            <rect width="5" height="5" x="20" y="100" rx={radius}/>
+            <rect width="5" height="5" x="80" y="100" rx={radius}/>
+            <rect width="5" height="5" x="140" y="100" rx={radius}/>
+            <rect width="5" height="5" x="40" y="100" rx={radius}/>
+            <rect width="5" height="5" x="100" y="100" rx={radius}/>
+            <rect width="5" height="5" x="160" y="100" rx={radius}/>
+            <rect width="5" height="5" x="180" y="100" rx={radius}/>
+            <rect width="5" height="5" y="120" rx={radius}/>
+            <rect width="5" height="5" x="60" y="120" rx={radius}/>
+            <rect width="5" height="5" x="120" y="120" rx={radius}/>
+            <rect width="5" height="5" x="20" y="120" rx={radius}/>
+            <rect width="5" height="5" x="80" y="120" rx={radius}/>
+            <rect width="5" height="5" x="140" y="120" rx={radius}/>
+            <rect width="5" height="5" x="40" y="120" rx={radius}/>
+            <rect width="5" height="5" x="100" y="120" rx={radius}/>
+            <rect width="5" height="5" x="160" y="120" rx={radius}/>
+            <rect width="5" height="5" x="180" y="120" rx={radius}/>
+            <rect width="5" height="5" y="140" rx={radius}/>
+            <rect width="5" height="5" x="60" y="140" rx={radius}/>
+            <rect width="5" height="5" x="120" y="140" rx={radius}/>
+            <rect width="5" height="5" x="20" y="140" rx={radius}/>
+            <rect width="5" height="5" x="80" y="140" rx={radius}/>
+            <rect width="5" height="5" x="140" y="140" rx={radius}/>
+            <rect width="5" height="5" x="40" y="140" rx={radius}/>
+            <rect width="5" height="5" x="100" y="140" rx={radius}/>
+            <rect width="5" height="5" x="160" y="140" rx={radius}/>
+            <rect width="5" height="5" x="180" y="140" rx={radius}/>
+            <rect width="5" height="5" y="160" rx={radius}/>
+            <rect width="5" height="5" x="60" y="160" rx={radius}/>
+            <rect width="5" height="5" x="120" y="160" rx={radius}/>
+            <rect width="5" height="5" x="20" y="160" rx={radius}/>
+            <rect width="5" height="5" x="80" y="160" rx={radius}/>
+            <rect width="5" height="5" x="140" y="160" rx={radius}/>
+            <rect width="5" height="5" x="40" y="160" rx={radius}/>
+            <rect width="5" height="5" x="100" y="160" rx={radius}/>
+            <rect width="5" height="5" x="160" y="160" rx={radius}/>
+            <rect width="5" height="5" x="180" y="160" rx={radius}/>
+            <rect width="5" height="5" y="180" rx={radius}/>
+            <rect width="5" height="5" x="60" y="180" rx={radius}/>
+            <rect width="5" height="5" x="120" y="180" rx={radius}/>
+            <rect width="5" height="5" x="20" y="180" rx={radius}/>
+            <rect width="5" height="5" x="80" y="180" rx={radius}/>
+            <rect width="5" height="5" x="140" y="180" rx={radius}/>
+            <rect width="5" height="5" x="40" y="180" rx={radius}/>
+            <rect width="5" height="5" x="100" y="180" rx={radius}/>
+            <rect width="5" height="5" x="160" y="180" rx={radius}/>
+            <rect width="5" height="5" x="180" y="180" rx={radius}/>
         </svg>
     );
 }
@@ -226,17 +228,32 @@ const useStyles = createStyles((theme) => ({
 
 export function Hero() {
     // TODO (peacecwz): Refactor here It's so long. You can extract modal and login logic into another component
-    const { reload } = useRouter();
+    const {reload} = useRouter();
     const [canOpenPopup, setCanOpenPopup] = useState(false);
     const [oauthToken, setOauthToken] = useState('');
     const [openedWindow, setOpenedWindow] = useState<WindowProxy | null>(null);
     const [pin, setPin] = useState('')
     const [username, setUsername] = useState<string | null>(null);
+    const {classes} = useStyles();
+    const timer = useRef();
 
-    const { classes } = useStyles();
+    const handleWindowPopup = (url: string, onPopupClose: () => void) => {
+        const windowPopup = window.open(url, 'Login to Mutty on Twitter', `_target=blank,width=600,height=800,left=${window.innerWidth}`);
+
+        // @ts-ignore
+        timer.current = setInterval(() => {
+            // @ts-ignore
+            if (windowPopup.closed) {
+                clearInterval(timer.current);
+                onPopupClose();
+            }
+        }, 1000);
+
+        return windowPopup;
+    };
 
     const handleLogin = async () => {
-        const { authorizeURL, oauth_token } = await fetch('/api/account/login', {
+        const {authorizeURL, oauth_token} = await fetch('/api/account/login', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -245,15 +262,26 @@ export function Hero() {
         setOauthToken(oauth_token);
 
         // TODO (peacecwz): Safari cannot allow if your popup url is different with your origin domain. Create an endpoint and get redirect url as parameter. Be carefull redirect attacks
-        setOpenedWindow(window.open(authorizeURL, 'Login to Mutty on Twitter', `_target=blank,width=600,height=800,left=${window.innerWidth}`));
+        const popupWindow = handleWindowPopup(authorizeURL, () => {
+            ga.event({
+                action: "EXTERNAL_POPUP_CLOSED",
+                params: {}
+            })
+            setCanOpenPopup(false);
+        });
+        setOpenedWindow(popupWindow);
 
         setTimeout(() => {
+            ga.event({
+                action: "LOGIN_START",
+                params: {}
+            })
             setCanOpenPopup(true);
         }, 3 * 1000);
     };
 
     const handleSubmit = async (data: any) => {
-        const { success, username } = await fetch('/api/account/callback', {
+        const {success, username} = await fetch('/api/account/callback', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -265,14 +293,23 @@ export function Hero() {
         }).then(res => res.json());
 
         if (success) {
+            ga.event({
+                action: "LOGIN_COMPLETE",
+                params: {}
+            })
             localStorage.setItem('TWITTER_USERNAME', username)
             openedWindow?.close();
             reload()
+        } else {
+            ga.event({
+                action: "LOGIN_FAILED",
+                params: {}
+            })
         }
     }
 
     const form = useForm({
-        initialValues: { pin: '' },
+        initialValues: {pin: ''},
 
         validate: {
             pin: (value) => (value.length < 7 ? 'Incorrect Twitter Pin' : null),
@@ -280,7 +317,7 @@ export function Hero() {
     });
 
     const handleLogout = async () => {
-        const { success } = await fetch('/api/account/logout', {
+        const {success} = await fetch('/api/account/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -288,8 +325,17 @@ export function Hero() {
         }).then(res => res.json());
 
         if (success) {
+            ga.event({
+                action: "LOGOUT",
+                params: {}
+            })
             localStorage.removeItem('TWITTER_USERNAME');
             reload()
+        } else {
+            ga.event({
+                action: "LOGOUT_FAILED",
+                params: {}
+            })
         }
     }
 
@@ -303,14 +349,21 @@ export function Hero() {
         <>
             <Modal
                 opened={canOpenPopup}
-                onClose={() => setCanOpenPopup(false)}
+                onClose={() => {
+                    ga.event({
+                        action: "POPUP_CLOSED",
+                        params: {}
+                    })
+                    setCanOpenPopup(false)
+                    openedWindow?.close();
+                }}
                 title="Authorize Twitter with PIN"
             >
                 <Container size={460} my={30}>
                     <form onSubmit={form.onSubmit(async (values) => await handleSubmit(values))}>
                         <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
                             <TextInput {...form.getInputProps('pin')} label="Twitter PIN" placeholder="123456"
-                                required />
+                                       required/>
                             <Group position="apart" mt="lg" className={classes.controls}>
                                 <Button type={'submit'} className={'bg-tw-100'}>Authorize</Button>
                             </Group>
@@ -319,10 +372,10 @@ export function Hero() {
                 </Container>
             </Modal>
             <Container className={classes.wrapper} size={1400}>
-                <Dots className={classes.dots} style={{ left: 0, top: 0 }} />
-                <Dots className={classes.dots} style={{ left: 0, top: 140 }} />
-                <Dots className={classes.dots} style={{ right: 0, top: 0 }} />
-                <Dots className={classes.dots} style={{ right: 0, top: 140 }} />
+                <Dots className={classes.dots} style={{left: 0, top: 0}}/>
+                <Dots className={classes.dots} style={{left: 0, top: 140}}/>
+                <Dots className={classes.dots} style={{right: 0, top: 0}}/>
+                <Dots className={classes.dots} style={{right: 0, top: 140}}/>
 
                 <div className={classes.inner}>
                     <Title className={classes.title}>
@@ -349,14 +402,14 @@ export function Hero() {
                             </Button>
                         ) : (
                             <Button className={'bg-tw-100'} onClick={handleLogin} size="lg">
-                                <IconBrandTwitter className={'mr-1'} size={18} fill={'white'} />
+                                <IconBrandTwitter className={'mr-1'} size={18} fill={'white'}/>
                                 Login with Twitter
                             </Button>
                         )}
                         <Link href={"https://github.com/peacecwz/mutty"} target={'_blank'}>
                             <Button className={'ml-2 bg-black text-white hover:bg-gray-500'} size="lg"
-                                variant="default">
-                                <IconBrandGithub className={'mr-1'} size={18} fill={'white'} />
+                                    variant="default">
+                                <IconBrandGithub className={'mr-1'} size={18} fill={'white'}/>
                                 Github
                             </Button>
                         </Link>

@@ -1,4 +1,4 @@
-export * from './card';
+export * from './keyword-catalog-card';
 export * from './country-picker';
 export * from './faq';
 export * from './footer';

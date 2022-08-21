@@ -1,6 +1,5 @@
-import {IconHeart} from '@tabler/icons';
 import {Card, Image, Text, Group, Badge, Button, ActionIcon, createStyles} from '@mantine/core';
-import {useEffect} from "react";
+import * as ga from '../utils/ga';
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -34,13 +33,23 @@ interface BadgeCardProps {
     category: any;
     isMuted: boolean;
     isLogged: boolean;
+    country: string;
 }
 
-export function BadgeCard({image, title, description, topic, category, isMuted, isLogged}: BadgeCardProps) {
+export function KeywordCatalogCard({
+                                       image,
+                                       title,
+                                       description,
+                                       topic,
+                                       category,
+                                       isMuted,
+                                       isLogged,
+                                       country
+                                   }: BadgeCardProps) {
     const {classes, theme} = useStyles();
 
     const mute = async () => {
-        const result = await fetch(`/mute-dictionaries/tr/${category.topicKey}/${category.key}.json`).then(res => res.json());
+        const result = await fetch(`/mute-dictionaries/${country}/${category.topicKey}/${category.key}.json`).then(res => res.json());
         result.push(`mutty:${category.key}`);
 
         await fetch('/api/mutes/bulk', {
@@ -51,6 +60,15 @@ export function BadgeCard({image, title, description, topic, category, isMuted, 
             body: JSON.stringify({
                 keywords: result
             })
+        })
+
+        ga.event({
+            action: "MUTE_KEYWORD",
+            params: {
+                country: country,
+                topic: category.topicKey,
+                category: category.key
+            }
         })
 
         window.location.reload();
