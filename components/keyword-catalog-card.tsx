@@ -93,7 +93,7 @@ export function KeywordCatalogCard({
             </Card.Section>
 
             <Group mt="xs">
-                <Button onClick={mute} disabled={!isLogged || isMuted} radius="md" style={{flex: 1}}>
+                <Button onClick={mute} disabled={!isLogged || isMuted} radius="md" className={'bg-tw-100'}>
                     Mute this
                 </Button>
             </Group>
