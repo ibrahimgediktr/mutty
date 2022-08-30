@@ -1,5 +1,33 @@
 [
   {
+    "key": "asidik-gundem-1231231",
+    "name": "Asidik Gündem",
+    "topic": "Genel",
+    "topicKey": "genel",
+    "description": "Ahmet Çığşar'ın gündemden uzaklaşması için kullandığı kelimeler"
+  },
+  {
+    "key": "politik-kurum-ve-tanimlar-1231231",
+    "name": "Politik Kurum ve Tanımlar",
+    "topic": "Genel",
+    "topicKey": "genel",
+    "description": "Ahmet Çığşar'ın politik konulardan uzaklaşması için kullandığı kelimeler"
+  },
+  {
+    "key": "fikir-icermeyenler-1231231",
+    "name": "Fikir İçermeyenler",
+    "topic": "Genel",
+    "topicKey": "genel",
+    "description": "Ahmet Çığşar'ın fikir içermeyen cevaplar, hakaret içerikli tweetlleri susturmak için kullandığı kelimeler"
+  },
+  {
+    "key": "viral-uygulamalar-1231231",
+    "name": "Viral Uygulamalar",
+    "topic": "Genel",
+    "topicKey": "genel",
+    "description": "Ahmet Çığşar'ın viral uygulamaları susturmak için kullandığı kelimeler"
+  },
+  {
     "key": "doviz-1231231",
     "name": "Döviz",
     "topic": "Ekonomi",
