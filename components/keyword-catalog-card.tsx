@@ -47,7 +47,7 @@ export function KeywordCatalogCard({
     const {classes, theme} = useStyles();
 
     const mute = async () => {
-        const result = await fetch(`/mute-dictionaries/${country}/${category.topicKey}/${category.key}.json`).then(res => res.json());
+        const result = await fetch(`/mute-dictionaries/${country.toLowerCase()}/${category.topicKey}/${category.key}.json`).then(res => res.json());
         result.push(`mutty:${category.key}`);
 
         await fetch('/api/mutes/bulk', {
