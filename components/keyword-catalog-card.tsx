@@ -26,7 +26,6 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface BadgeCardProps {
-    image: string;
     title: string;
     topic: string;
     description: string;
