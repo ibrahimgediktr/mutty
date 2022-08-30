@@ -37,7 +37,6 @@ interface BadgeCardProps {
 }
 
 export function KeywordCatalogCard({
-                                       image,
                                        title,
                                        description,
                                        topic,
@@ -76,10 +75,6 @@ export function KeywordCatalogCard({
 
     return (
         <Card withBorder radius="md" p="md" className={classes.card}>
-            <Card.Section>
-                <Image src={image} alt={title} height={180}/>
-            </Card.Section>
-
             <Card.Section className={classes.section} mt="md">
                 <Group position="apart">
                     <Text size="lg" weight={500}>

@@ -138,7 +138,6 @@ const KeywordCatalogList = () => {
                     {getCategories().map((m: any, index) => (
                         <Grid.Col key={`mute-keyword-catalog-${index}`} xs={4}>
                             <KeywordCatalogCard
-                                image={`https://loremflickr.com/320/240/${m.topicKey}?random=${index}`}
                                 title={m.name}
                                 description={m.description}
                                 topic={m.topic}
