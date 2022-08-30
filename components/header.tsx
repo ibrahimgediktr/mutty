@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {createStyles, Header as HeaderComponent, Group, ActionIcon, Container, Burger} from '@mantine/core';
+import {createStyles, Header as HeaderComponent, Navbar, Group, ActionIcon, Container, Burger} from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
 import {IconBrandTwitter, IconBrandGithub} from '@tabler/icons';
 import Link from "next/link";
@@ -7,14 +7,11 @@ import {GITHUB_URL, TWITTER_URL} from "../services/app.services";
 
 const useStyles = createStyles((theme) => ({
     inner: {
-        display: 'flex',
-        justifyContent: 'space-between',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3,1fr)',
         alignItems: 'center',
         height: 56,
 
-        [theme.fn.smallerThan('sm')]: {
-            justifyContent: 'flex-start',
-        },
     },
 
     links: {
@@ -33,7 +30,12 @@ const useStyles = createStyles((theme) => ({
             marginLeft: 'auto',
         },
     },
-
+    navbar : {
+        position:'absolute',
+        [theme.fn.largerThan('sm')]: {
+            display: 'none',
+        },
+    },
     burger: {
         marginRight: theme.spacing.md,
 
@@ -94,6 +96,10 @@ export function Header({links}: HeaderActionProps) {
                 <Group className={classes.links} spacing={5}>
                     {items}
                 </Group>
+
+                <Navbar hidden={!opened} className={classes.navbar}>
+                    {items}
+                </Navbar>
 
                 <Container>
                     {/* TODO (peacecwz): Design a logo for better UI */}
