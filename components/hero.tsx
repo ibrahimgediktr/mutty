@@ -358,7 +358,7 @@ export function Hero() {
         let browser = detect();
         setBrowser(browser)
 
-        if (browser?.name === "safari") {
+        if (browser?.os === "iOS" || browser?.name === "safari") {
             getAuthorizeUrl().then(authorizeURL => {
                 setAuthorizeUrl(authorizeURL)
             })
