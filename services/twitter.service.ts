@@ -62,8 +62,6 @@ export const getAccessToken = async (oauth_token: string, pin: string) => {
         ).then((res) => res.text())
     );
 
-    console.log('result', result)
-
     return result;
 };
 

@@ -5,18 +5,16 @@ import {
     Button,
     Container,
     Modal,
-    Box,
     Paper,
     TextInput,
-    Group,
-    Anchor,
-    Center
+    Group
 } from '@mantine/core';
 import {IconBrandGithub, IconBrandTwitter} from "@tabler/icons";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 import {useForm} from '@mantine/form';
 import Link from "next/link";
+import {detect, BrowserInfo, SearchBotDeviceInfo, BotInfo, NodeInfo, ReactNativeInfo} from "../utils/browser";
 
 import * as ga from '../utils/ga';
 
@@ -232,13 +230,19 @@ export function Hero() {
     const [canOpenPopup, setCanOpenPopup] = useState(false);
     const [oauthToken, setOauthToken] = useState('');
     const [openedWindow, setOpenedWindow] = useState<WindowProxy | null>(null);
-    const [pin, setPin] = useState('')
     const [username, setUsername] = useState<string | null>(null);
+    const [authorizeUrl, setAuthorizeUrl] = useState<string>()
+    const [browser, setBrowser] = useState<BrowserInfo
+        | SearchBotDeviceInfo
+        | BotInfo
+        | NodeInfo
+        | ReactNativeInfo
+        | null>();
     const {classes} = useStyles();
     const timer = useRef();
 
     const handleWindowPopup = (url: string, onPopupClose: () => void) => {
-        const windowPopup = window.open(url, 'Login to Mutty on Twitter', `_target=blank,width=600,height=800,left=${window.innerWidth}`);
+        const windowPopup = window.open(`/api/account/login-redirect?url=${url}`, 'Login to Mutty on Twitter', `_target=blank,width=600,height=800,left=${window.innerWidth}`);
 
         // @ts-ignore
         timer.current = setInterval(() => {
@@ -252,7 +256,7 @@ export function Hero() {
         return windowPopup;
     };
 
-    const handleLogin = async () => {
+    const getAuthorizeUrl = async () => {
         const {authorizeURL, oauth_token} = await fetch('/api/account/login', {
             method: 'GET',
             headers: {
@@ -260,6 +264,21 @@ export function Hero() {
             },
         }).then(res => res.json());
         setOauthToken(oauth_token);
+        return authorizeURL;
+    }
+
+    function handleOpenedPopup() {
+        setTimeout(() => {
+            ga.event({
+                action: "LOGIN_START",
+                params: {}
+            })
+            setCanOpenPopup(true);
+        }, 3 * 1000);
+    }
+
+    const handleLogin = async () => {
+        const authorizeURL = await getAuthorizeUrl();
 
         // TODO (peacecwz): Safari cannot allow if your popup url is different with your origin domain. Create an endpoint and get redirect url as parameter. Be carefull redirect attacks
         const popupWindow = handleWindowPopup(authorizeURL, () => {
@@ -271,13 +290,7 @@ export function Hero() {
         });
         setOpenedWindow(popupWindow);
 
-        setTimeout(() => {
-            ga.event({
-                action: "LOGIN_START",
-                params: {}
-            })
-            setCanOpenPopup(true);
-        }, 3 * 1000);
+        handleOpenedPopup();
     };
 
     const handleSubmit = async (data: any) => {
@@ -342,8 +355,39 @@ export function Hero() {
     useEffect(() => {
         if (!window) return
 
+        let browser = detect();
+        setBrowser(browser)
+
+        if (browser?.os === "iOS" || browser?.name === "safari") {
+            getAuthorizeUrl().then(authorizeURL => {
+                setAuthorizeUrl(authorizeURL)
+            })
+        }
+
         setUsername(localStorage.getItem('TWITTER_USERNAME'))
     }, []);
+
+    const LoginButton = () => {
+        if (authorizeUrl) {
+            return <a
+                href={authorizeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                    handleOpenedPopup()
+                }}
+                className={"flex items-center font-bold text-white py-2 px-6 rounded bg-tw-100 hover:bg-sky-700"}
+            >
+                <IconBrandTwitter className={'mr-1'} size={18} fill={'white'}/>
+                Login with Twitter
+            </a>
+        }
+
+        return <Button className={'bg-tw-100'} onClick={handleLogin} size="lg">
+            <IconBrandTwitter className={'mr-1'} size={18} fill={'white'}/>
+            Login with Twitter
+        </Button>
+    }
 
     return (
         <>
@@ -401,10 +445,7 @@ export function Hero() {
                                 Logout @{username}
                             </Button>
                         ) : (
-                            <Button className={'bg-tw-100'} onClick={handleLogin} size="lg">
-                                <IconBrandTwitter className={'mr-1'} size={18} fill={'white'}/>
-                                Login with Twitter
-                            </Button>
+                            <LoginButton/>
                         )}
                         <Link href={"https://github.com/peacecwz/mutty"} target={'_blank'}>
                             <Button className={'ml-2 bg-black text-white hover:bg-gray-500'} size="lg"
